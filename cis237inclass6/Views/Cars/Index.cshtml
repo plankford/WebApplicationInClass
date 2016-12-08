@@ -1,0 +1,89 @@
+﻿@model IEnumerable<cis237inclass6.Models.Car>
+
+@{
+    ViewBag.Title = "Car List";
+}
+
+<h2>Car List</h2>
+<!--This is going to be used for the filtering of the items-->
+<div class="form-group">
+    <fieldset>
+        <legend>Search Filter</legend>
+        @*Start the C# part to do the rendering of the HTML*@
+        @{ 
+            using (Html.BeginForm("Filter", "Cars", FormMethod.Post, new { @class = "form-inline" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <label for="make">Make</label>
+                @Html.TextBox("make", (string)ViewBag.filterMake)
+
+                <label for="min">Minimum Cylinders</label>
+                @Html.TextBox("min", (string)ViewBag.filterMin)
+
+                <label for="max">Maximum Cylinders</label>
+                @Html.TextBox("max", (string)ViewBag.filterMax)
+                <br />
+                <input type="submit", value="Filter" class="btn btn-info pull-right" />
+            }
+        }
+    </fieldset>
+</div>
+<br />
+<br />
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.year)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.make)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.horsepower)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cylinders)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.year)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.make)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.model)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.horsepower)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cylinders)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>
